@@ -9,25 +9,16 @@ public class App {
 
 
     public static void main(String[] args) {
-        // declaration and instantiation of objects/variables
-    	System.setProperty(
+        System.setProperty(
             "webdriver.gecko.driver",
             "C:\\Program Files\\scelenium\\geckodriver.exe");
         WebDriver driver = new FirefoxDriver();
-		//comment the above 2 lines and uncomment below 2 lines to use Chrome
-		//System.setProperty("webdriver.chrome.driver","G:\\chromedriver.exe");
-		//WebDriver driver = new ChromeDriver();
-        // launch Fire fox and direct it to the Base URL
         driver.get("https://hex4.neocities.org/");
-	// to do
-	// 3 classes: unclicked, marked, markedNew
-        Method[] methods = driver.class.getDeclaredMethods();
-
-        for (int i = 0; i < methods.length; i++) {
-                System.out.println(methods[i].toString());
-        }
-        //close Fire fox
-        driver.close();
-       
+	List<WebElement> elements = driver.findElements(By.className("unclicked"));
+	while (elements.size() > 0) {
+		elements.get((int) Math.floor(elements.size() * Math.random())).click();
+		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+		elements = driver.findElements(By.className("unclicked"));
+	}
     }
 }
